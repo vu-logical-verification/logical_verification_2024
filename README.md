@@ -23,7 +23,11 @@ _Install Lean Version Manager_.
 
 Once those are set up, open a terminal (_Terminal => New Terminal_),
 navigate to the location where you would like to have the course files, and
-clone this Git repository:
+run the following command to clone this repository:
+
+```bash
+git clone https://github.com/vu-logical-verification/logical_verification_2024
+```
 
 ![Cloning this Git repo](.imgs/clone.png)
 
