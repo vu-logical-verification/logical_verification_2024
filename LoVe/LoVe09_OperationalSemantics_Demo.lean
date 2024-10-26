@@ -16,67 +16,7 @@ set_option tactic.hygienic false
 
 namespace LoVe
 
-
-/- ## First Things First: Formalization Projects
-
-Instead of two of the homework sheets, you can do a verification project, worth
-20 points. If you choose to do so, please send your lecturer a message by email
-by the end of the week. For a fully successful project, we expect about 200 (or
-more) lines of Lean, including definitions and proofs.
-
-Some ideas for projects follow.
-
-Computer science:
-
-* extended WHILE language with static arrays or other features;
-* functional data structures (e.g., balanced trees);
-* functional algorithms (e.g., bubble sort, merge sort, Tarjan's algorithm);
-* compiler from expressions or imperative programs to, e.g., stack machine;
-* type systems (e.g., Benjamin Pierce's __Types and Programming Languages__);
-* security properties (e.g., Volpano–Smith-style noninterference analysis);
-* theory of first-order terms, including matching, term rewriting;
-* automata theory;
-* normalization of context-free grammars or regular expressions;
-* process algebras and bisimilarity;
-* soundness and possibly completeness of proof systems (e.g., Genzen's sequent
-  calculus, natural deduction, tableaux);
-* separation logic;
-* verified program using Hoare logic.
-
-Mathematics:
-
-* graphs;
-* combinatorics;
-* number theory.
-
-Metaprogramming:
-
-* custom tactic;
-* custom diagnosis tool.
-
-Past evaluation:
-
-Q: How did you find the project?
-
-A: Enjoyable.
-
-A: Fun and hard.
-
-A: Good, I think the format was excellent in a way that it gave people the
-   chance to do challenging exercises and hand them in incomplete.
-
-A: I really really liked it. I think it's a great way of learning—find
-   something you like, dig in it a little, get stuck, ask for help. I wish I
-   could do more of that!
-
-A: It was great to have some time to try to work out some stuff you find
-   interesting yourself.
-
-A: lots of fun actually!!!
-
-A: Very helpful. It gave the opportunity to spend some more time on a
-   particular aspect of the course.
-
+/-
 
 ## Formal Semantics
 
