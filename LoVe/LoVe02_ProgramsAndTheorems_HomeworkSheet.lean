@@ -17,7 +17,7 @@ namespace LoVe
 
 /- ## Question 1 (4 points): Minus 2
 
-1.1 (3 points). Define the recursive function `minusTwo` that subtracts two from
+1.1 (3 points). Define the function `minusTwo` that subtracts two from
 its argument by recursion.
 
 Hint: There should be three cases. -/
