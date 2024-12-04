@@ -4,7 +4,7 @@ Johannes Hölzl, and Jannis Limperg. See `LICENSE.txt`. -/
 import LoVe.LoVelib
 
 
-/- # LoVe Homework 12 (10 points + 2 bonus points):
+/- # LoVe Homework 12 (10 points):
 # Logical Foundations of Mathematics
 
 Replace the placeholders (e.g., `:= sorry`) with your solutions. -/
@@ -93,47 +93,6 @@ theorem Multiset.union_iden_left {α : Type} [BEq α] (A : Multiset α) :
 
 theorem Multiset.union_iden_right {α : Type} [BEq α] (A : Multiset α) :
     Multiset.union A Multiset.empty = A :=
-  sorry
-
-
-/- ## Question 2 (2 bonus points): Nonempty Types
-
-In the lecture, we saw the inductive predicate `Nonempty` that states that a
-type has at least one element: -/
-
-#print Nonempty
-
-/- The purpose of this question is to think about what would happen if all
-types had at least one element. To investigate this, we introduce this fact as
-an axiom as follows. Introducing axioms should be generally avoided or done
-with great care, since they can easily lead to contradictions, as we will
-see. -/
-
-axiom Sort_Nonempty (α : Sort _) :
-  Nonempty α
-
-/- This axiom gives us a theorem `Sort_Nonempty` admitted with no proof. It
-resembles a theorem proved by `sorry`, but without the warning. -/
-
-#check Sort_Nonempty
-
-/- 2.1 (1 bonus point). Prove that this axiom leads to a contradiction, i.e.,
-lets us derive `False`. -/
-
-theorem proof_of_False :
-    False :=
-  sorry
-
-/- 2.2 (1 bonus point). Prove that even the following weaker axiom leads to a
-contradiction. Of course, you may not use the axiom or the theorem from 3.1.
-
-Hint: Subtypes can help. -/
-
-axiom Type_Nonempty (α : Type _) :
-  Nonempty α
-
-theorem another_proof_of_False :
-    False :=
   sorry
 
 end LoVe
