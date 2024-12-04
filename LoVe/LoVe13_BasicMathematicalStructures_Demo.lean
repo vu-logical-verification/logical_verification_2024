@@ -2,7 +2,9 @@
 Johannes Hölzl, and Jannis Limperg. See `LICENSE.txt`. -/
 
 import LoVe.LoVe06_InductivePredicates_Demo
-
+import Mathlib.Algebra.Group.MinimalAxioms
+import Mathlib.Algebra.Field.MinimalAxioms
+import Mathlib
 
 /- # LoVe Demo 13: Basic Mathematical Structures
 
@@ -86,40 +88,49 @@ def Int2.add : Int2 → Int2 → Int2
   | Int2.one,  Int2.zero => Int2.one
   | Int2.one,  Int2.one  => Int2.zero
 
+-- First, we register the addition operation...
+instance Int2.Add : Add Int2 where
+  add := Int2.add
+
+-- ...our zero element...
+instance Int2.Zero : Zero Int2 where
+  zero := Int2.zero
+
+-- ...and a negation operation.
+instance Int2.Neg : Neg Int2 where
+  neg := id
+
+-- Then, we register Int2 as an AddGroup using a minimal set of axioms it satisfies
+-- Note that the axioms are named in the style of a multiplicative group, i.e.
+-- one_mul should really be called zero_add.
 instance Int2.AddGroup : AddGroup Int2 :=
-  { add          := Int2.add
-    zero         := Int2.zero
-    neg          := fun a ↦ a
-    add_assoc    :=
-      by
-        intro a b c
-        cases a <;>
-          cases b <;>
-          cases c <;>
-          rfl
-    zero_add     :=
-      by
-        intro a
-        cases a <;>
-          rfl
-    add_zero     :=
-      by
-        intro a
-        cases a <;>
-          rfl
-    add_left_neg :=
-      by
-        intro a
-        cases a <;>
-          rfl }
+  AddGroup.ofLeftAxioms
+    (assoc := by
+      intro a b c
+      cases a <;> cases b <;> cases c
+      all_goals rfl
+    )
+    (one_mul := by
+      intro a
+      cases a <;> rfl
+    )
+    (inv_mul_cancel := by
+      intro a
+      cases a <;> rfl
+    )
 
 #reduce Int2.one + 0 - 0 - Int2.one
 
 /- Another example: Lists are an `AddMonoid`: -/
 
+instance List.Zero {α}: Zero (List α) where
+  zero := []
+
+instance List.Add {α}: Add (List α) where
+  add := List.append
+
 instance List.AddMonoid {α : Type} : AddMonoid (List α) :=
-  { zero      := []
-    add       := fun xs ys ↦ xs ++ ys
+  { nsmul := nsmulRec
     add_assoc := List.append_assoc
     zero_add  := List.nil_append
     add_zero  := List.append_nil }
@@ -155,126 +166,47 @@ def Int2.mul : Int2 → Int2 → Int2
   | Int2.one,  a => a
   | Int2.zero, _ => Int2.zero
 
-/-
-instance Int2.Field : Field Int2 :=
-  { Int2.AddGroup with
-    one            := Int2.one
-    mul            := Int2.mul
-    inv            := fun a ↦ a
-    add_comm       :=
-      by
-        intro a b
-        cases a <;>
-          cases b <;>
-          rfl
-    exists_pair_ne :=
-      by
-        apply Exists.intro Int2.zero
-        apply Exists.intro Int2.one
-        simp
-    zero_mul       :=
-      by
-        intro a
-        rfl
-    mul_zero       :=
-      by
-        intro a
-        cases a <;>
-          rfl
-    one_mul        :=
-      by
-        intro a
-        rfl
-    mul_one        :=
-      by
-        intro a
-        cases a <;>
-          rfl
-    mul_inv_cancel :=
-      by
-        intro a h
-        cases a
-        { apply False.elim
-          apply h
-          rfl }
-        { rfl }
-    inv_zero       := by rfl
-    mul_assoc      :=
-      by
-        intro a b c
-        cases a <;>
-          cases b <;>
-          cases c <;>
-          rfl
-    mul_comm       :=
-      by
-        intro a b
-        cases a <;>
-          cases b <;>
-          rfl
-    left_distrib   :=
-      by
-        intro a b c
-        cases a <;>
-          cases b <;>
-          rfl
-    right_distrib  :=
-      by
-        intro a b c
-        cases a <;>
-          cases b <;>
-          cases c <;>
-          rfl }
--/
+instance Int2.One: One Int2 where
+  one := Int2.one
 
--- TODO: temporary
+instance Int2.Mul: Mul Int2 where
+  mul := Int2.mul
+
+instance Int2.Inv: Inv Int2 where
+  inv := id
+
+-- Similarly to Int2.AddGroup, we show Int2 forms a field
+-- using a minimal set of axioms.
 instance Int2.Field : Field Int2 :=
-  { Int2.AddGroup with
-    one            := Int2.one
-    mul            := Int2.mul
-    inv            := fun a ↦ a
-    add_comm       :=
-      by
-        intro a b
-        cases a <;>
-          cases b <;>
-          rfl
-    exists_pair_ne :=
-      by
-        apply Exists.intro Int2.zero
-        apply Exists.intro Int2.one
-        simp
-    zero_mul       :=
-      by
-        intro a
+  Field.ofMinimalAxioms
+    (add_assoc := Int2.AddGroup.add_assoc)
+    (zero_add := Int2.AddGroup.zero_add)
+    (neg_add_cancel := Int2.AddGroup.neg_add_cancel)
+    (mul_assoc := by
+      intro a b c; cases a <;> rfl
+    )
+    (mul_comm := by
+      intro a b; cases a <;> cases b <;> rfl
+    )
+    (one_mul := by
+      intro a; cases a <;> rfl
+    )
+    (mul_inv_cancel := by
+      intro a; cases a
+      · intro h
+        contradiction
+      · intro h
         rfl
-    mul_zero       :=
-      by
-        intro a
-        cases a <;>
-          rfl
-    one_mul        :=
-      by
-        intro a
-        rfl
-    mul_one        :=
-      by
-        intro a
-        cases a <;>
-          rfl
-    mul_inv_cancel :=
-      by
-        intro a h
-        cases a
-        { apply False.elim
-          apply h
-          rfl }
-        { rfl }
-    inv_zero       := by rfl
-    mul_assoc      := sorry
-    mul_comm       := sorry
-    left_distrib   := sorry
-    right_distrib  := sorry }
+    )
+    (inv_zero := rfl)
+    (left_distrib := by
+      intro a b c
+      cases a <;> rfl
+    )
+    (exists_pair_ne := by
+      use Int2.zero, Int2.one
+      tauto
+    )
 
 #reduce (1 : Int2) * 0 / (0 - 1)
 
