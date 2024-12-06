@@ -100,9 +100,9 @@ instance Int2.Zero : Zero Int2 where
 instance Int2.Neg : Neg Int2 where
   neg := id
 
--- Then, we register Int2 as an AddGroup using a minimal set of axioms it satisfies
--- Note that the axioms are named in the style of a multiplicative group, i.e.
--- one_mul should really be called zero_add.
+-- Then, we register Int2 as an AddGroup using a minimal set of axioms.
+-- Note that the axioms are named in the style of a multiplicative group,
+-- i.e. using additive naming, one_mul should really be called zero_add.
 instance Int2.AddGroup : AddGroup Int2 :=
   AddGroup.ofLeftAxioms
     (assoc := by
