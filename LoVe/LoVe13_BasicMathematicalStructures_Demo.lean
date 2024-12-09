@@ -2,9 +2,9 @@
 Johannes Hölzl, and Jannis Limperg. See `LICENSE.txt`. -/
 
 import LoVe.LoVe06_InductivePredicates_Demo
+import Mathlib.Tactic
 import Mathlib.Algebra.Group.MinimalAxioms
 import Mathlib.Algebra.Field.MinimalAxioms
-import Mathlib
 
 /- # LoVe Demo 13: Basic Mathematical Structures
 
